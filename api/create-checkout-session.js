@@ -2,10 +2,9 @@ import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// Lock it down so nobody can pass random Stripe price IDs
+// Lock it down so nobody can pass random Stripe price IDs. Add all IDs here.
 const ALLOWED_PRICE_IDS = new Set([
-  "price_1SggSn3wZkikQ95UyR4psAHL",
-  "price_REPLACE_ME_2"
+  "price_1SggSn3wZkikQ95UyR4psAHL"
   // add your real price ids here
 ]);
 
