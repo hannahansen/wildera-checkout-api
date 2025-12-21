@@ -4,14 +4,26 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Lock it down so nobody can pass random Stripe price IDs
 const ALLOWED_PRICE_IDS = new Set([
-  "price_REPLACE_ME_1",
+  "price_1SggSn3wZkikQ95UyR4psAHL",
   "price_REPLACE_ME_2"
   // add your real price ids here
 ]);
 
 export default async function handler(req, res) {
-  // Basic CORS so your GitHub Pages site can call this
-  res.setHeader("Access-Control-Allow-Origin", "https://wildera.github.io");
+
+// Basic CORS so your site can call this (GitHub Pages + custom domain)
+  const allowedOrigins = new Set([
+    "https://wildera.github.io",
+    "https://wilderaboutique.com",
+    "https://www.wilderaboutique.com"
+  ]);
+
+  const origin = req.headers.origin;
+  if (origin && allowedOrigins.has(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+
+  res.setHeader("Vary", "Origin");
   res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
@@ -40,8 +52,8 @@ export default async function handler(req, res) {
       mode: "payment",
       line_items,
       // No need to create new pages: return to cart with query params
-      success_url: "https://wildera.github.io/cart.html?success=1",
-      cancel_url: "https://wildera.github.io/cart.html?canceled=1"
+      success_url: "https://www.wilderaboutique.com/cart.html?success=1",
+      cancel_url: "https://www.wilderaboutique.com/cart.html?canceled=1"
     });
 
     // Stripe recommends redirecting to the returned URL
