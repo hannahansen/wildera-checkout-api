@@ -57,9 +57,9 @@ export default async function handler(req, res) {
         enabled: true,
       },
       billing_address_collection: "required",
-      automatic_tax: {
-        enabled: true,
-      },
+      // automatic_tax: {
+      //   enabled: true,
+      // },
       success_url: "https://www.wilderaboutique.com/cart.html?success=1",
       cancel_url: "https://www.wilderaboutique.com/cart.html?canceled=1"
     });
