@@ -50,7 +50,16 @@ export default async function handler(req, res) {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items,
-      // No need to create new pages: return to cart with query params
+      shipping_address_collection: {
+        allowed_countries: ["US"],
+      },
+      phone_number_collection: {
+        enabled: true,
+      },
+      billing_address_collection: "required",
+      automatic_tax: {
+        enabled: true,
+      },
       success_url: "https://www.wilderaboutique.com/cart.html?success=1",
       cancel_url: "https://www.wilderaboutique.com/cart.html?canceled=1"
     });
